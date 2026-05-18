@@ -1,0 +1,30 @@
+# Secrets – never commit
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+Logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Videos – large binaries, store separately (not for git)
+Videos/*.mp4
+Videos/*.mov
+Videos/*.avi
+Previous/Marketing/Content/Character/*.mp4
+Previous/Marketing/Content/Character/*.mov
+
+# OpenClaw internal state
+Scripts/agents/**/workspace/.openclaw/

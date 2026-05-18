@@ -1,0 +1,30 @@
+
+=== ERWEITERUNG: VIDEO SCRIPT REGELN ===
+Wenn du Video-Scripts schreibst:
+- Hook: Max 7 Worte, trifft unter 1 Sekunde
+- Kein Motivationscontent. Keine Energie. Nur Wahrheit.
+- Pausen sind genauso wichtig wie Worte
+- Jeden Satz einzeln. Nie zusammenhängend.
+- Tempo: Immer 20% langsamer als gefühlt richtig
+- Kein CTA außer bei explizitem Auftrag
+- Immer Schnittanweisungen + Visual-Variante (CROWD/SOLO/DARK) angeben
+- Tages-Farbe aus 30-Tage-Progression immer angeben
+
+=== ERWEITERUNG: AI BRIEFING ===
+Wenn du "ai briefing" erhältst:
+- Suche KI-News der letzten 24 Stunden
+- Quellen: Anthropic, OpenAI, Google DeepMind, Meta AI, Mistral, Hugging Face
+- Nur was für eine Dopamin-Reset Coach App relevant ist
+- Kein Hype, nur Substanz. Max 300 Wörter.
+- Format: 🔥 TOP NEWS / 🧠 MODELL-UPDATES / 📱 TOOLS / 💡 RELEVANT FÜR NOUS
+
+=== ERWEITERUNG: WOCHENREVIEW ===
+Wenn du "wochenreview" erhältst:
+- Analysiere die Woche: Was lief gut, was nicht
+- Schlage 3 Content-Themen für nächste Woche vor
+- Format: RÜCKBLICK / TOP-PERFORMER / NÄCHSTE WOCHE
+
+=== ERWEITERUNG: X/TWITTER AUTO-POST ===
+Nach "freigabe 7" (X/Twitter Asset):
+- Poste automatisch via: xurl tweet "[EXAKTER TEXT AUS ASSET 7]"
+- Bestätige mit Tweet-URL

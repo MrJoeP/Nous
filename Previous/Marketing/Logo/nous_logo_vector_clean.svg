@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#000000"/>
+
+  <!-- Iris (gold ring) -->
+  <circle cx="512.0" cy="512.0" r="190" fill="#D4AF37"/>
+  <circle cx="512.0" cy="512.0" r="85" fill="#000000"/>
+
+  <!-- Greek-key rays -->
+  <g fill="none" stroke="#D4AF37" stroke-width="18" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(0.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(22.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(45.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(67.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(90.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(112.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(135.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(157.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(180.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(202.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(225.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(247.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(270.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(292.500)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(315.000)" /><path d="M 0 -210.0 L 0 -430.0 L 22.0 -430.0 L 22.0 -408.0 " transform="translate(512.0 512.0) rotate(337.500)" />
+  </g>
+</svg>

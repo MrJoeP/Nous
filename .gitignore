@@ -28,3 +28,9 @@ Previous/Marketing/Content/Character/*.mov
 
 # OpenClaw internal state
 Scripts/agents/**/workspace/.openclaw/
+
+# Expo app
+app/node_modules/
+app/.expo/
+app/.env
+app/dist/

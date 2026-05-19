@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { useNous } from "@/lib/nous/state";
 import { colorsForDay } from "@/lib/nous/palette";
-import { sendProgressReport } from "@/lib/nous/email";
 import { BlockScreenModal } from "./BlockScreenModal";
 
 export function DemoTool() {
   const { state, set, reset } = useNous();
   const [open, setOpen] = useState(false);
   const [block, setBlock] = useState(false);
-  const [emailStatus, setEmailStatus] = useState<string>("");
   const c = colorsForDay(state.currentDay);
 
   const btn = (label: string, onClick: () => void) => (
@@ -31,14 +29,6 @@ export function DemoTool() {
       {label}
     </button>
   );
-
-  const sendDemo = async () => {
-    setEmailStatus("Sending...");
-    const target = { ...state, currentDay: Math.max(7, state.currentDay) };
-    const res = await sendProgressReport(target).catch(() => ({ ok: false, error: "err" } as const));
-    setEmailStatus(res.ok ? "Sent ✓" : `Failed: ${("error" in res && res.error) || "err"}`);
-    setTimeout(() => setEmailStatus(""), 4000);
-  };
 
   return (
     <>
@@ -84,7 +74,13 @@ export function DemoTool() {
             <strong style={{ fontSize: 13, letterSpacing: 2 }}>DAY {state.currentDay}</strong>
             <button
               onClick={() => setOpen(false)}
-              style={{ background: "none", border: "none", color: c.secondary, cursor: "pointer", fontSize: 18 }}
+              style={{
+                background: "none",
+                border: "none",
+                color: c.secondary,
+                cursor: "pointer",
+                fontSize: 18,
+              }}
             >
               ✕
             </button>
@@ -100,11 +96,10 @@ export function DemoTool() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {btn("Reset to Day 1", () => reset())}
             {btn("Jump to Day 15", () => set({ currentDay: 15 }))}
+            {btn("Jump to Day 28", () => set({ currentDay: 28 }))}
             {btn("Jump to Day 30", () => set({ currentDay: 30 }))}
             {btn("Trigger Block Screen", () => setBlock(true))}
-            {btn("Simulate Week 1 Email", sendDemo)}
           </div>
-          {emailStatus && <div style={{ marginTop: 12, fontSize: 13, color: c.secondary }}>{emailStatus}</div>}
         </div>
       )}
 

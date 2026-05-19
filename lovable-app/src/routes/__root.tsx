@@ -72,6 +72,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body style={{ margin: 0, background: "#000" }}>
         {children}
         <Scripts />
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+          }
+        `}} />
       </body>
     </html>
   );

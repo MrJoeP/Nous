@@ -46,7 +46,7 @@ Rules:
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-5",
           max_tokens: data.currentDay === 30 ? 300 : 150,
           system,
           messages: [{ role: "user", content: "Check in with me." }],

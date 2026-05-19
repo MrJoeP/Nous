@@ -1,7 +1,34 @@
 export const PALETTE: string[] = [
-  "#000000","#020202","#050505","#090909","#0E0E0E","#141414","#1A1A1A","#212121","#292929","#323232",
-  "#3C3C3C","#474747","#535353","#606060","#6E6E6E","#7D7D7D","#8D8D8D","#9E9E9E","#B0B0B0","#BBBBBB",
-  "#C4C4C4","#CBBFA8","#CEBCA2","#D1BA9E","#D4B99A","#D8B997","#DCBA94","#DFBD92","#E2C09A","#EAE0D0",
+  "#000000",
+  "#020202",
+  "#050505",
+  "#090909",
+  "#0E0E0E",
+  "#141414",
+  "#1A1A1A",
+  "#212121",
+  "#292929",
+  "#323232",
+  "#3C3C3C",
+  "#474747",
+  "#535353",
+  "#606060",
+  "#6E6E6E",
+  "#7D7D7D",
+  "#8D8D8D",
+  "#9E9E9E",
+  "#B0B0B0",
+  "#BBBBBB",
+  "#C4C4C4",
+  "#CBBFA8",
+  "#CEBCA2",
+  "#D1BA9E",
+  "#D4B99A",
+  "#D8B997",
+  "#DCBA94",
+  "#DFBD92",
+  "#E2C09A",
+  "#EAE0D0",
 ];
 
 export function colorsForDay(day: number) {
@@ -12,15 +39,57 @@ export function colorsForDay(day: number) {
     bg,
     text: lightText ? "#FFFFFF" : "#000000",
     secondary: lightText ? "#AAAAAA" : "#555555",
-    border: lightText ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)",
+    border: lightText ? "#FFFFFF" : "#000000",
     softBorder: lightText ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)",
   };
+}
+
+export function hexToRgb(hex: string) {
+  const normalized = hex.replace("#", "");
+  return {
+    r: parseInt(normalized.slice(0, 2), 16),
+    g: parseInt(normalized.slice(2, 4), 16),
+    b: parseInt(normalized.slice(4, 6), 16),
+  };
+}
+
+export function rgbToHex({ r, g, b }: { r: number; g: number; b: number }) {
+  return `#${[r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("")}`;
+}
+
+export function interpolateHex(from: string, to: string, t: number) {
+  const a = hexToRgb(from);
+  const b = hexToRgb(to);
+  const clamped = Math.max(0, Math.min(1, t));
+  return rgbToHex({
+    r: a.r + (b.r - a.r) * clamped,
+    g: a.g + (b.g - a.g) * clamped,
+    b: a.b + (b.b - a.b) * clamped,
+  });
+}
+
+export function getDayColor(day: number) {
+  return PALETTE[Math.max(1, Math.min(30, day)) - 1];
+}
+
+export function getOutsideInBackground(day: number) {
+  const clamped = Math.max(1, Math.min(30, day));
+  const outerColor = getDayColor(clamped);
+  let centerColor = "#000000";
+
+  if (clamped >= 11 && clamped <= 20) {
+    centerColor = interpolateHex("#000000", "#3A3A3A", (clamped - 11) / 9);
+  } else if (clamped >= 21) {
+    centerColor = interpolateHex("#3A3A3A", "#C0B090", (clamped - 21) / 9);
+  }
+
+  return `radial-gradient(ellipse at center, ${centerColor} 0%, ${outerColor} 100%)`;
 }
 
 export function characterBg(day: number) {
   if (day <= 10) return "rgba(255,255,255,0.10)";
   if (day <= 20) return "rgba(255,255,255,0.20)";
-  return "rgba(0,0,0,0.10)";
+  return "rgba(0,0,0,0.22)";
 }
 
 export const BLOCK_QUOTES = [

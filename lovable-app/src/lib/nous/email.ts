@@ -4,7 +4,6 @@ import { sendResendEmail } from "./resend.functions";
 
 function buildHTML(s: NousState) {
   const currentWeek = Math.min(4, Math.ceil(s.currentDay / 7));
-  const journalCount = Object.values(s.journalEntries).filter((v) => v && v.trim()).length;
   const squares = PALETTE.map((c, i) => {
     const day = i + 1;
     const fill = day <= s.currentDay ? c : "#CCCCCC";
@@ -26,7 +25,6 @@ function buildHTML(s: NousState) {
     <h3 style="font-size:13px;letter-spacing:2px;margin:0 0 12px;color:#555;">YOUR STATS</h3>
     <p style="margin:4px 0;">Days completed: <strong>${s.currentDay}/30</strong></p>
     <p style="margin:4px 0;">Current streak: <strong>${s.streak} days</strong></p>
-    <p style="margin:4px 0;">Journal entries: <strong>${journalCount}</strong></p>
     <p style="margin:4px 0;">Check-ins completed: <strong>${s.checkInsCompleted}</strong></p>
     <p style="margin:4px 0;">Times you waited: <strong>${s.blocksWaited}</strong></p>
 

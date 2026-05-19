@@ -108,7 +108,7 @@ export function DemoTool() {
         </div>
       )}
 
-      <BlockScreenModal open={block} onClose={() => setBlock(false)} />
+      <BlockScreenModal open={block} app="Instagram" onClose={() => setBlock(false)} />
     </>
   );
 }

@@ -112,7 +112,6 @@ export function NousProvider({ children }: { children: ReactNode }) {
         const nextDay = Math.min(30, s.currentDay + 1);
         const next: NousState = { ...s, currentDay: nextDay, hasCheckedInToday: false };
         if ([7, 14, 21, 30].includes(nextDay) && s.checkInsCompleted > 0 && s.email) {
-          // fire and forget
           import("./email").then((m) => m.sendProgressReport(next)).catch(() => {});
         }
         return next;

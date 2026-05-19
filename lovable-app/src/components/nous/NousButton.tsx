@@ -8,10 +8,18 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   selected?: boolean;
 }
 
-export function NousButton({ uppercase, full = true, selected, style, children, disabled, ...rest }: Props) {
+export function NousButton({
+  uppercase,
+  full = true,
+  selected,
+  style,
+  children,
+  disabled,
+  ...rest
+}: Props) {
   const { state } = useNous();
   const c = colorsForDay(state.currentDay);
-  const borderColor = selected ? c.text : c.softBorder;
+  const borderColor = selected ? c.text : c.border;
   const base: CSSProperties = {
     height: 52,
     width: full ? "100%" : "auto",
@@ -35,9 +43,9 @@ export function NousButton({ uppercase, full = true, selected, style, children, 
       {...rest}
       disabled={disabled}
       style={base}
-      onMouseDown={(e) => ((e.currentTarget.style.opacity = "0.7"))}
-      onMouseUp={(e) => ((e.currentTarget.style.opacity = disabled ? "0.35" : "1"))}
-      onMouseLeave={(e) => ((e.currentTarget.style.opacity = disabled ? "0.35" : "1"))}
+      onMouseDown={(e) => (e.currentTarget.style.opacity = "0.7")}
+      onMouseUp={(e) => (e.currentTarget.style.opacity = disabled ? "0.35" : "1")}
+      onMouseLeave={(e) => (e.currentTarget.style.opacity = disabled ? "0.35" : "1")}
     >
       {children}
     </button>

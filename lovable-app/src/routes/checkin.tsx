@@ -25,11 +25,6 @@ function CheckinPage() {
     setMessage("");
     const start = Date.now();
     try {
-      // collect last 3 journal entries (excluding today)
-      const recent: { day: number; entry: string }[] = [];
-      for (let d = state.currentDay - 1; d >= Math.max(1, state.currentDay - 3); d--) {
-        recent.push({ day: d, entry: state.journalEntries[d] || "" });
-      }
       const res = await askThomas({
         data: {
           currentDay: state.currentDay,
@@ -37,7 +32,6 @@ function CheckinPage() {
           intention: state.intention,
           goals: state.goals,
           severity: state.severity,
-          recentJournals: recent,
         },
       });
 
@@ -48,7 +42,8 @@ function CheckinPage() {
         setMessage(res.message);
         recordCheckIn(res.message);
       } else {
-        if (res.error === "rate_limited") setErr("Thomas is unavailable right now. Try again later.");
+        if (res.error === "rate_limited")
+          setErr("Thomas is unavailable right now. Try again later.");
         else if (res.error === "missing_key") setErr("API key not configured.");
         else setErr("Check-in unavailable. Try again.");
       }
@@ -60,6 +55,11 @@ function CheckinPage() {
   };
 
   useEffect(() => {
+    if (state.hasCheckedInToday && state.lastCheckInMessage) {
+      setMessage(state.lastCheckInMessage);
+      setLoading(false);
+      return;
+    }
     run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -68,12 +68,27 @@ function CheckinPage() {
     <AppShell>
       <button
         onClick={() => nav({ to: "/" })}
-        style={{ background: "none", border: "none", color: c.secondary, fontSize: 24, cursor: "pointer", padding: 0 }}
+        style={{
+          background: "none",
+          border: "none",
+          color: c.secondary,
+          fontSize: 24,
+          cursor: "pointer",
+          padding: 0,
+        }}
       >
         ←
       </button>
 
-      <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", paddingTop: 40 }}>
+      <div
+        style={{
+          minHeight: "60vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingTop: 40,
+        }}
+      >
         {loading && (
           <div style={{ textAlign: "center" }}>
             <div
@@ -87,7 +102,6 @@ function CheckinPage() {
               }}
             />
             <div style={{ color: c.secondary, fontSize: 16 }}>Thomas is thinking...</div>
-            <style>{`@keyframes nousPulse { 0%,100% { opacity: 1 } 50% { opacity: 0.2 } }`}</style>
           </div>
         )}
 
@@ -123,7 +137,9 @@ function CheckinPage() {
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: 18, color: c.text, marginBottom: 24 }}>{err}</p>
             {err.startsWith("Check-in") && (
-              <NousButton full={false} onClick={run} style={{ padding: "0 32px" }}>Try again</NousButton>
+              <NousButton full={false} onClick={run} style={{ padding: "0 32px" }}>
+                Try again
+              </NousButton>
             )}
           </div>
         )}

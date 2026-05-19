@@ -23,9 +23,7 @@ function OnboardingPage() {
   const [err, setErr] = useState("");
 
   const toggleApp = (v: string) => {
-    setIgnoredApps((g) =>
-      g.includes(v) ? g.filter((x) => x !== v) : [...g, v]
-    );
+    setIgnoredApps((g) => g.includes(v) ? g.filter((x) => x !== v) : [...g, v]);
   };
 
   const submit = () => {
@@ -44,38 +42,21 @@ function OnboardingPage() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: BG,
-        color: TEXT,
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-      }}
-    >
+    <div style={{ minHeight: "100vh", background: BG, color: TEXT, fontFamily: "'DM Sans', system-ui, sans-serif" }}>
       <div style={{ maxWidth: 480, margin: "0 auto", padding: "60px 28px 48px", minHeight: "100vh" }}>
-        <div
-          style={{
-            fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
-            fontWeight: 700,
-            fontSize: 24,
-            textAlign: "center",
-            letterSpacing: 2,
-          }}
-        >
+        <div style={{
+          fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+          fontWeight: 700, fontSize: 24, textAlign: "center", letterSpacing: 2,
+        }}>
           NOUS
         </div>
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 24, marginBottom: 48 }}>
           {[1, 2, 3].map((n) => (
-            <div
-              key={n}
-              style={{
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                background: n === step ? TEXT : "transparent",
-                border: `1px solid ${TEXT}`,
-              }}
-            />
+            <div key={n} style={{
+              width: 8, height: 8, borderRadius: 4,
+              background: n === step ? TEXT : "transparent",
+              border: `1px solid ${TEXT}`,
+            }} />
           ))}
         </div>
 
@@ -98,13 +79,9 @@ function OnboardingPage() {
                       background: "transparent",
                       color: sel ? TEXT : SECONDARY,
                       border: `1px solid ${sel ? TEXT : BORDER}`,
-                      borderRadius: 8,
-                      padding: 16,
-                      fontFamily: "inherit",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      cursor: "pointer",
-                      minHeight: 70,
+                      borderRadius: 8, padding: 16,
+                      fontFamily: "inherit", fontWeight: 600, fontSize: 14,
+                      cursor: "pointer", minHeight: 70,
                     }}
                   >
                     {a.label}
@@ -112,11 +89,7 @@ function OnboardingPage() {
                 );
               })}
             </div>
-            <button
-              onClick={() => setStep(2)}
-              disabled={ignoredApps.length === 0}
-              style={cta(ignoredApps.length === 0)}
-            >
+            <button onClick={() => setStep(2)} disabled={ignoredApps.length === 0} style={cta(ignoredApps.length === 0)}>
               Next →
             </button>
           </>
@@ -139,12 +112,8 @@ function OnboardingPage() {
                       background: "transparent",
                       color: sel ? TEXT : SECONDARY,
                       border: `1px solid ${sel ? TEXT : BORDER}`,
-                      borderRadius: 4,
-                      padding: "16px 20px",
-                      textAlign: "left",
-                      fontFamily: "inherit",
-                      fontSize: 15,
-                      cursor: "pointer",
+                      borderRadius: 4, padding: "16px 20px",
+                      textAlign: "left", fontFamily: "inherit", fontSize: 15, cursor: "pointer",
                     }}
                   >
                     {s.label}
@@ -152,11 +121,7 @@ function OnboardingPage() {
                 );
               })}
             </div>
-            <button
-              onClick={() => setStep(3)}
-              disabled={!severity}
-              style={cta(!severity)}
-            >
+            <button onClick={() => setStep(3)} disabled={!severity} style={cta(!severity)}>
               Next →
             </button>
           </>
@@ -186,11 +151,7 @@ function OnboardingPage() {
             />
             {err && <div style={{ color: SECONDARY, marginTop: 12, fontSize: 14 }}>{err}</div>}
             <div style={{ marginTop: 40 }}>
-              <button
-                onClick={submit}
-                disabled={!intention.trim() || !email.trim()}
-                style={cta(!intention.trim() || !email.trim())}
-              >
+              <button onClick={submit} disabled={!intention.trim() || !email.trim()} style={cta(!intention.trim() || !email.trim())}>
                 Begin my 30 days
               </button>
             </div>
@@ -202,28 +163,18 @@ function OnboardingPage() {
 }
 
 const cta = (disabled: boolean): React.CSSProperties => ({
-  width: "100%",
-  height: 52,
-  background: "transparent",
-  color: TEXT,
-  border: `1px solid ${TEXT}`,
-  borderRadius: 4,
+  width: "100%", height: 52,
+  background: "transparent", color: TEXT,
+  border: `1px solid ${TEXT}`, borderRadius: 4,
   fontFamily: "'DM Sans', system-ui, sans-serif",
-  fontWeight: 600,
-  fontSize: 15,
-  letterSpacing: 0.5,
+  fontWeight: 600, fontSize: 15, letterSpacing: 0.5,
   cursor: disabled ? "not-allowed" : "pointer",
   opacity: disabled ? 0.35 : 1,
 });
 
 const input = (): React.CSSProperties => ({
-  width: "100%",
-  background: "transparent",
-  border: "none",
-  borderBottom: `1px solid ${BORDER}`,
-  color: TEXT,
-  fontSize: 18,
-  padding: "12px 0",
-  outline: "none",
-  fontFamily: "inherit",
+  width: "100%", background: "transparent",
+  border: "none", borderBottom: `1px solid ${BORDER}`,
+  color: TEXT, fontSize: 18, padding: "12px 0",
+  outline: "none", fontFamily: "inherit",
 });

@@ -7,13 +7,14 @@ import { CharacterPlaceholder } from "@/components/nous/CharacterPlaceholder";
 import { NousButton } from "@/components/nous/NousButton";
 import { BlockScreenModal } from "@/components/nous/BlockScreenModal";
 import { DotsLayer } from "@/components/nous/DotsLayer";
+import { Day30Ceremony } from "@/components/nous/Day30Ceremony";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
 function HomePage() {
-  const { state, incrementDay } = useNous();
+  const { state, incrementDay, set } = useNous();
   const nav = useNavigate();
   const [activeApp, setActiveApp] = useState<string | null>(null);
 
@@ -23,11 +24,16 @@ function HomePage() {
 
   if (!state.hasOnboarded) return null;
 
+  const showCeremony = state.currentDay === 30 && !state.hasCelebratedDay30;
+
   const c = colorsForDay(state.currentDay);
   const checkedIn = state.hasCheckedInToday && state.lastCheckInMessage;
 
   return (
     <AppShell>
+      {showCeremony && (
+        <Day30Ceremony onDone={() => set({ hasCelebratedDay30: true })} />
+      )}
       <DotsLayer />
 
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40 }}>

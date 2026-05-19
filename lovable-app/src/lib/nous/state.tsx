@@ -25,6 +25,7 @@ export interface NousState {
   checkInsCompleted: number;
   ignoredApps: string[];
   dotTaps: DotTap[];
+  hasCelebratedDay30: boolean;
 }
 
 const STORAGE_KEY = "nous_state_v1";
@@ -45,6 +46,7 @@ const DEFAULTS: NousState = {
   checkInsCompleted: 0,
   ignoredApps: [],
   dotTaps: [],
+  hasCelebratedDay30: false,
 };
 
 function applyDayReset(s: NousState): NousState {

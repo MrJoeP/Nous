@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { useNous } from "@/lib/nous/state";
-import { colorsForDay } from "@/lib/nous/palette";
+import { colorsForDay, getOutsideInBackground } from "@/lib/nous/palette";
 import { DemoTool } from "./DemoTool";
 
 interface Props {
@@ -12,16 +12,16 @@ interface Props {
 export function AppShell({ children, forceBlack = false, showDemo = true }: Props) {
   const { state } = useNous();
   const c = colorsForDay(state.currentDay);
-  const bg = forceBlack ? "#000000" : c.bg;
+  const background = forceBlack ? "#000000" : getOutsideInBackground(state.currentDay);
   const text = forceBlack ? "#FFFFFF" : c.text;
 
   return (
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: bg,
+        background,
         color: text,
-        transition: "background-color 500ms ease, color 500ms ease",
+        transition: "background 500ms ease, color 500ms ease",
         fontFamily: "'DM Sans', system-ui, sans-serif",
       }}
     >

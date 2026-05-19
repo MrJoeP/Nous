@@ -40,6 +40,8 @@ function OnboardingPage() {
       severity,
       intention: intention.trim(),
       email: email.trim(),
+      startedAt: new Date().toISOString(),
+      demoDayOverride: null,
       hasOnboarded: true,
     });
     nav({ to: "/" });
@@ -54,7 +56,9 @@ function OnboardingPage() {
         fontFamily: "'DM Sans', system-ui, sans-serif",
       }}
     >
-      <div style={{ maxWidth: 480, margin: "0 auto", padding: "60px 28px 48px", minHeight: "100vh" }}>
+      <div
+        style={{ maxWidth: 480, margin: "0 auto", padding: "60px 28px 48px", minHeight: "100vh" }}
+      >
         <div
           style={{
             fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
@@ -66,7 +70,15 @@ function OnboardingPage() {
         >
           NOUS
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 24, marginBottom: 48 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 8,
+            marginTop: 24,
+            marginBottom: 48,
+          }}
+        >
           {[1, 2, 3].map((n) => (
             <div
               key={n}
@@ -81,13 +93,30 @@ function OnboardingPage() {
           ))}
         </div>
 
+        {step > 1 && (
+          <button onClick={() => setStep((s) => Math.max(1, s - 1))} style={backBtn}>
+            ← Back
+          </button>
+        )}
+
         {step === 1 && (
           <>
-            <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, margin: "0 0 12px" }}>
+            <h1
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: 28,
+                fontWeight: 700,
+                margin: "0 0 12px",
+              }}
+            >
               What do you want to reclaim?
             </h1>
-            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>Choose what matters most.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32 }}>
+            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>
+              Choose what matters most.
+            </p>
+            <div
+              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32 }}
+            >
               {GOALS.map((g) => {
                 const sel = goals.includes(g.value);
                 return (
@@ -124,10 +153,19 @@ function OnboardingPage() {
 
         {step === 2 && (
           <>
-            <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, margin: "0 0 12px" }}>
+            <h1
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: 28,
+                fontWeight: 700,
+                margin: "0 0 12px",
+              }}
+            >
               How bad is it?
             </h1>
-            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>Be honest. This is just for you.</p>
+            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>
+              Be honest. This is just for you.
+            </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
               {SEVERITIES.map((s) => {
                 const sel = severity === s.value;
@@ -152,11 +190,7 @@ function OnboardingPage() {
                 );
               })}
             </div>
-            <button
-              onClick={() => setStep(3)}
-              disabled={!severity}
-              style={cta(!severity)}
-            >
+            <button onClick={() => setStep(3)} disabled={!severity} style={cta(!severity)}>
               Next →
             </button>
           </>
@@ -164,23 +198,44 @@ function OnboardingPage() {
 
         {step === 3 && (
           <>
-            <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, margin: "0 0 12px" }}>
+            <h1
+              style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: 28,
+                fontWeight: 700,
+                margin: "0 0 12px",
+              }}
+            >
               Name it.
             </h1>
             <p style={{ fontSize: 20, margin: "0 0 32px" }}>What are you trying to reclaim?</p>
             <input
               value={intention}
-              onChange={(e) => { setIntention(e.target.value); setErr(""); }}
+              onChange={(e) => {
+                setIntention(e.target.value);
+                setErr("");
+              }}
               placeholder="e.g. reading without my phone"
               style={input()}
             />
-            <label style={{ display: "block", color: SECONDARY, fontSize: 13, marginTop: 32, marginBottom: 8 }}>
+            <label
+              style={{
+                display: "block",
+                color: SECONDARY,
+                fontSize: 13,
+                marginTop: 32,
+                marginBottom: 8,
+              }}
+            >
               Where should we send your weekly report?
             </label>
             <input
               type="email"
               value={email}
-              onChange={(e) => { setEmail(e.target.value); setErr(""); }}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErr("");
+              }}
               placeholder="your@email.com"
               style={input()}
             />
@@ -215,6 +270,18 @@ const cta = (disabled: boolean): React.CSSProperties => ({
   cursor: disabled ? "not-allowed" : "pointer",
   opacity: disabled ? 0.35 : 1,
 });
+
+const backBtn: React.CSSProperties = {
+  background: "transparent",
+  border: "none",
+  color: SECONDARY,
+  cursor: "pointer",
+  fontFamily: "'DM Sans', system-ui, sans-serif",
+  fontSize: 14,
+  fontWeight: 600,
+  marginBottom: 24,
+  padding: 0,
+};
 
 const input = (): React.CSSProperties => ({
   width: "100%",

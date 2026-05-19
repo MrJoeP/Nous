@@ -1,5 +1,5 @@
 import { useNous } from "@/lib/nous/state";
-import { BLOCK_QUOTES, colorsForDay } from "@/lib/nous/palette";
+import { BLOCK_QUOTES, colorsForDay, getOutsideInBackground } from "@/lib/nous/palette";
 
 export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { state, set } = useNous();
@@ -17,7 +17,7 @@ export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: ()
       style={{
         position: "fixed",
         inset: 0,
-        background: c.bg,
+        background: getOutsideInBackground(state.currentDay),
         color: c.text,
         zIndex: 1000,
         display: "flex",
@@ -55,7 +55,9 @@ export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: ()
         <p style={{ fontSize: 22, lineHeight: "32px", margin: "0 auto 32px", maxWidth: 280 }}>
           {quote}
         </p>
-        <div style={{ fontSize: 13, color: c.secondary, marginBottom: 32 }}>Day {state.currentDay}</div>
+        <div style={{ fontSize: 13, color: c.secondary, marginBottom: 32 }}>
+          Day {state.currentDay}
+        </div>
         <div style={{ display: "flex", gap: "4%", width: "100%" }}>
           <button
             onClick={wait}

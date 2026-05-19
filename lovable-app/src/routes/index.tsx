@@ -13,7 +13,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { state, incrementDay } = useNous();
+  const { state } = useNous();
   const nav = useNavigate();
   const [block, setBlock] = useState(false);
 
@@ -28,10 +28,10 @@ function HomePage() {
   return (
     <AppShell>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40 }}>
-        <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: 2 }}>DAY {state.currentDay}</span>
-        {state.streak > 0 && (
-          <span style={{ fontSize: 14 }}>{state.streak}-day streak</span>
-        )}
+        <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: 2 }}>
+          DAY {state.currentDay}
+        </span>
+        {state.streak > 0 && <span style={{ fontSize: 14 }}>{state.streak}-day streak</span>}
       </div>
 
       <div style={{ marginBottom: 32 }}>
@@ -55,8 +55,8 @@ function HomePage() {
         </p>
       )}
 
-      <div style={{ marginBottom: 16, opacity: state.hasCheckedInToday ? 0.5 : 1 }}>
-        <NousButton onClick={() => nav({ to: "/checkin" })}>
+      <div style={{ marginBottom: 16 }}>
+        <NousButton onClick={() => nav({ to: "/checkin" })} disabled={state.hasCheckedInToday}>
           {state.hasCheckedInToday ? "Revisit today" : "Check in with Thomas"}
         </NousButton>
       </div>
@@ -88,9 +88,9 @@ function HomePage() {
           fontSize: 14,
         }}
       >
-        <button onClick={() => nav({ to: "/journal" })} style={linkBtn(c.text)}>Journal</button>
-        <button onClick={() => nav({ to: "/progress" })} style={linkBtn(c.text)}>Progress</button>
-        <button onClick={incrementDay} style={linkBtn(c.text)}>End Day</button>
+        <button onClick={() => nav({ to: "/progress" })} style={linkBtn(c.text)}>
+          Progress
+        </button>
       </div>
 
       <div style={{ textAlign: "center", marginTop: 32 }}>

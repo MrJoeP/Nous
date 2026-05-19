@@ -7,9 +7,6 @@ const InputSchema = z.object({
   intention: z.string().max(500),
   goals: z.array(z.string()).max(10),
   severity: z.string().max(50),
-  recentJournals: z
-    .array(z.object({ day: z.number().int(), entry: z.string() }))
-    .max(5),
 });
 
 export const askThomas = createServerFn({ method: "POST" })
@@ -18,21 +15,12 @@ export const askThomas = createServerFn({ method: "POST" })
     const apiKey = process.env.CLAUDE_API_KEY;
     if (!apiKey) return { ok: false as const, error: "missing_key" };
 
-    const journalLines =
-      data.recentJournals.length === 0
-        ? "(no entries)"
-        : data.recentJournals.map((j) => `- Day ${j.day}: "${j.entry || "none"}"`).join("\n");
-
-    const missingCount = data.recentJournals.filter((j) => !j.entry || !j.entry.trim()).length;
-    const missingNote =
-      missingCount >= 2 ? "\n2 or more of the last 3 entries are missing — do not reference journal content. Focus on today." : "";
-
     const dayNote =
       data.currentDay === 1
         ? "\nThis is Day 1: acknowledge the start. Do not reference entries."
         : data.currentDay === 30
-        ? "\nThis is Day 30: write a closing message (5 sentences max) referencing their original intention."
-        : "";
+          ? "\nThis is Day 30: write a closing message (5 sentences max) referencing their original intention."
+          : "";
 
     const system = `You are Thomas, the Nous coach — a 30-day dopamine reset guide.
 The user is on day ${data.currentDay} of their reset. Streak: ${data.streak} days.
@@ -40,8 +28,7 @@ Their intention: "${data.intention}"
 Their goals: ${data.goals.join(", ")}
 Why they're here: "${data.severity}"
 
-Recent journal entries (most recent first — do not include today):
-${journalLines}${missingNote}${dayNote}
+${dayNote}
 
 Rules:
 - First person, past tense for your actions
@@ -59,7 +46,7 @@ Rules:
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-5",
+          model: "claude-sonnet-4-20250514",
           max_tokens: data.currentDay === 30 ? 300 : 150,
           system,
           messages: [{ role: "user", content: "Check in with me." }],
@@ -72,9 +59,7 @@ Rules:
         return { ok: false as const, error: "api_error" };
       }
       const json: any = await res.json();
-      const message =
-        json?.content?.[0]?.text?.trim() ||
-        "Day noted. Nothing more to say.";
+      const message = json?.content?.[0]?.text?.trim() || "Day noted. Nothing more to say.";
       return { ok: true as const, message };
     } catch (e) {
       console.error("Claude fetch failed", e);

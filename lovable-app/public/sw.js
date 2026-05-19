@@ -1,4 +1,4 @@
-const CACHE = "nous-v1";
+const CACHE = "nous-__BUILD__";
 const SHELL = ["/", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (e) => {

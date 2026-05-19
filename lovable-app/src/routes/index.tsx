@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNous } from "@/lib/nous/state";
 import { colorsForDay } from "@/lib/nous/palette";
 import { AppShell } from "@/components/nous/AppShell";
 import { CharacterPlaceholder } from "@/components/nous/CharacterPlaceholder";
 import { NousButton } from "@/components/nous/NousButton";
 import { BlockScreenModal } from "@/components/nous/BlockScreenModal";
-import { useState } from "react";
+import { DotsLayer } from "@/components/nous/DotsLayer";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { state, incrementDay } = useNous();
   const nav = useNavigate();
-  const [block, setBlock] = useState(false);
+  const [activeApp, setActiveApp] = useState<string | null>(null);
 
   useEffect(() => {
     if (!state.hasOnboarded) nav({ to: "/onboarding" });
@@ -27,6 +27,9 @@ function HomePage() {
 
   return (
     <AppShell>
+      {/* dots render behind everything, absolutely positioned */}
+      <DotsLayer />
+
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40 }}>
         <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: 2 }}>DAY {state.currentDay}</span>
         {state.streak > 0 && (
@@ -79,12 +82,45 @@ function HomePage() {
         </p>
       )}
 
+      {/* ignored apps row — each tap opens the block screen for that app */}
+      {state.ignoredApps.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            justifyContent: "center",
+            marginBottom: 32,
+          }}
+        >
+          {state.ignoredApps.map((app) => (
+            <button
+              key={app}
+              onClick={() => setActiveApp(app)}
+              style={{
+                background: "transparent",
+                border: `1px solid ${c.secondary}`,
+                color: c.secondary,
+                borderRadius: 20,
+                padding: "6px 14px",
+                fontSize: 13,
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+                cursor: "pointer",
+                letterSpacing: 0.3,
+              }}
+            >
+              {app}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           gap: 32,
-          marginTop: 32,
+          marginTop: state.ignoredApps.length > 0 ? 0 : 32,
           fontSize: 14,
         }}
       >
@@ -93,13 +129,11 @@ function HomePage() {
         <button onClick={incrementDay} style={linkBtn(c.text)}>End Day</button>
       </div>
 
-      <div style={{ textAlign: "center", marginTop: 32 }}>
-        <button onClick={() => setBlock(true)} style={{ ...linkBtn(c.secondary), fontSize: 13 }}>
-          See your block screen →
-        </button>
-      </div>
-
-      <BlockScreenModal open={block} onClose={() => setBlock(false)} />
+      <BlockScreenModal
+        open={activeApp !== null}
+        app={activeApp ?? ""}
+        onClose={() => setActiveApp(null)}
+      />
     </AppShell>
   );
 }

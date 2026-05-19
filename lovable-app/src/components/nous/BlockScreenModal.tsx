@@ -1,14 +1,27 @@
 import { useNous } from "@/lib/nous/state";
 import { BLOCK_QUOTES, colorsForDay } from "@/lib/nous/palette";
 
-export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { state, set } = useNous();
+export function BlockScreenModal({
+  open,
+  app,
+  onClose,
+}: {
+  open: boolean;
+  app: string;
+  onClose: () => void;
+}) {
+  const { state, set, recordDotTap } = useNous();
   if (!open) return null;
   const c = colorsForDay(state.currentDay);
   const quote = BLOCK_QUOTES[(state.currentDay - 1) % 30];
 
   const wait = () => {
     set((s) => ({ blocksWaited: s.blocksWaited + 1 }));
+    onClose();
+  };
+
+  const openAnyway = () => {
+    recordDotTap(app);
     onClose();
   };
 
@@ -40,7 +53,7 @@ export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: ()
             margin: "0 auto 8px",
           }}
         />
-        <div style={{ color: "#666", fontSize: 13, marginBottom: 32 }}>Instagram</div>
+        <div style={{ color: "#666", fontSize: 13, marginBottom: 32 }}>{app}</div>
         <div
           style={{
             fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
@@ -76,7 +89,7 @@ export function BlockScreenModal({ open, onClose }: { open: boolean; onClose: ()
             I'll wait
           </button>
           <button
-            onClick={onClose}
+            onClick={openAnyway}
             style={{
               width: "48%",
               height: 52,

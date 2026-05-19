@@ -56,6 +56,17 @@ export const BLOCK_QUOTES = [
   "You came here to reclaim something. You did.",
 ];
 
+export const APPS: { value: string; label: string }[] = [
+  { value: "instagram", label: "Instagram" },
+  { value: "tiktok", label: "TikTok" },
+  { value: "twitter", label: "X / Twitter" },
+  { value: "youtube", label: "YouTube" },
+  { value: "snapchat", label: "Snapchat" },
+  { value: "reddit", label: "Reddit" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "linkedin", label: "LinkedIn" },
+];
+
 export const GOAL_LABELS: Record<string, string> = {
   focus: "Focus & deep work",
   sleep: "Sleep quality",

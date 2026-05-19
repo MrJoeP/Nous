@@ -1,5 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
+export interface DotTap {
+  id: string;
+  x: number;    // 0–100 percent of container
+  y: number;    // 0–100 percent of container
+  size: number; // px
+  day: number;
+  app: string;
+}
+
 export interface NousState {
   currentDay: number;
   streak: number;
@@ -14,6 +23,8 @@ export interface NousState {
   hasOnboarded: boolean;
   blocksWaited: number;
   checkInsCompleted: number;
+  ignoredApps: string[];
+  dotTaps: DotTap[];
 }
 
 const STORAGE_KEY = "nous_state_v1";
@@ -32,6 +43,8 @@ const DEFAULTS: NousState = {
   hasOnboarded: false,
   blocksWaited: 0,
   checkInsCompleted: 0,
+  ignoredApps: [],
+  dotTaps: [],
 };
 
 function applyDayReset(s: NousState): NousState {
@@ -62,6 +75,7 @@ interface Ctx {
   reset: () => void;
   incrementDay: () => void;
   recordCheckIn: (message: string) => void;
+  recordDotTap: (app: string) => void;
 }
 
 const NousCtx = createContext<Ctx | null>(null);
@@ -119,7 +133,21 @@ export function NousProvider({ children }: { children: ReactNode }) {
       });
     };
 
-    return { state, set, reset, incrementDay, recordCheckIn };
+    const recordDotTap = (app: string) => {
+      setState((s) => {
+        const dot: DotTap = {
+          id: `${Date.now()}-${Math.random()}`,
+          x: 10 + Math.random() * 80,
+          y: 10 + Math.random() * 80,
+          size: 54 + Math.random() * 46,
+          day: s.currentDay,
+          app,
+        };
+        return { ...s, dotTaps: [...s.dotTaps, dot] };
+      });
+    };
+
+    return { state, set, reset, incrementDay, recordCheckIn, recordDotTap };
   }, [state]);
 
   return <NousCtx.Provider value={ctx}>{children}</NousCtx.Provider>;

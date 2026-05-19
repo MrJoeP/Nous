@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useNous } from "@/lib/nous/state";
-import { GOALS, SEVERITIES } from "@/lib/nous/palette";
+import { APPS, SEVERITIES } from "@/lib/nous/palette";
 
 export const Route = createFileRoute("/onboarding")({
   component: OnboardingPage,
@@ -16,18 +16,16 @@ function OnboardingPage() {
   const { set } = useNous();
   const nav = useNavigate();
   const [step, setStep] = useState(1);
-  const [goals, setGoals] = useState<string[]>([]);
+  const [ignoredApps, setIgnoredApps] = useState<string[]>([]);
   const [severity, setSeverity] = useState("");
   const [intention, setIntention] = useState("");
   const [email, setEmail] = useState("");
   const [err, setErr] = useState("");
 
-  const toggleGoal = (v: string) => {
-    setGoals((g) => {
-      if (g.includes(v)) return g.filter((x) => x !== v);
-      if (g.length >= 3) return g;
-      return [...g, v];
-    });
+  const toggleApp = (v: string) => {
+    setIgnoredApps((g) =>
+      g.includes(v) ? g.filter((x) => x !== v) : [...g, v]
+    );
   };
 
   const submit = () => {
@@ -36,7 +34,7 @@ function OnboardingPage() {
       return;
     }
     set({
-      goals,
+      ignoredApps,
       severity,
       intention: intention.trim(),
       email: email.trim(),
@@ -84,16 +82,18 @@ function OnboardingPage() {
         {step === 1 && (
           <>
             <h1 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, fontWeight: 700, margin: "0 0 12px" }}>
-              What do you want to reclaim?
+              Which apps do you want to ignore?
             </h1>
-            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>Choose what matters most.</p>
+            <p style={{ color: SECONDARY, fontSize: 16, margin: "0 0 32px" }}>
+              Every time you reach for one, we'll be there instead.
+            </p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 32 }}>
-              {GOALS.map((g) => {
-                const sel = goals.includes(g.value);
+              {APPS.map((a) => {
+                const sel = ignoredApps.includes(a.label);
                 return (
                   <button
-                    key={g.value}
-                    onClick={() => toggleGoal(g.value)}
+                    key={a.value}
+                    onClick={() => toggleApp(a.label)}
                     style={{
                       background: "transparent",
                       color: sel ? TEXT : SECONDARY,
@@ -107,15 +107,15 @@ function OnboardingPage() {
                       minHeight: 70,
                     }}
                   >
-                    {g.label}
+                    {a.label}
                   </button>
                 );
               })}
             </div>
             <button
               onClick={() => setStep(2)}
-              disabled={goals.length === 0}
-              style={cta(goals.length === 0)}
+              disabled={ignoredApps.length === 0}
+              style={cta(ignoredApps.length === 0)}
             >
               Next →
             </button>
